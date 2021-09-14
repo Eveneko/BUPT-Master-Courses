@@ -1,0 +1,53 @@
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8
+% !Mode:: "TeX:UTF-8"
+
+\documentclass[onecolumn,oneside]{BUPTHomework}
+
+\usepackage{blindtext}
+
+\author{胡玉斌}
+\sid{202111054}
+\title{第一章\ 作业题}
+\coursecode{3131100063}
+\coursename{编码理论}
+
+\begin{document}
+  \maketitle
+  
+  \section*{5.}
+  考虑表1中列出的信源符号和它们相应的概率。对于这个码，求信源的熵、每个符号的平均二元字节数、该码的效率。
+
+  \begin{table}[!htbp]
+  \centering
+  \begin{tabular}{|c|c|c|c|}
+  \hline
+  符号    & 概率   & 自信息    & 码字 \\ \hline
+  $x_1$ & 0.40 & 1.3219 & 1  \\ \hline
+  $x_2$ & 0.35 & 1.5146 & 00 \\ \hline
+  $x_3$ & 0.25 & 2.0000 & 01 \\ \hline
+  \end{tabular}
+  \caption{信源符号和它们相应的概率、自信息及码字}
+  \end{table}
+
+  \section*{12.}
+  为什么要用信道编码器？信道编码要满足什么定理？请给出该定理的内容。
+
+  \section*{18.}
+  对于如图2所示的BSC信道，信源符号发生的概率为 。求：
+  \begin{enumerate}
+    \item 信源 $X$ 中事件 $x_1$ 和 $x_2$ 分别的自信息（以比特为单位）；
+    \item 接收符号 $y_i(i=1,2)$ 发生的概率；
+    \item 求条件概率 $P(x_i \vert y_i)$ ；
+    \item 收到消息 $y_i(i=1,2)$ 后，获得的关于 $x_i(i=1,2)$ 的信息量；
+    \item 信源 $X$ 和信源 $Y$ 的信息熵；
+    \item 条件熵 $H(X \vert Y)$ 和 $H(Y \vert X)$。
+  \end{enumerate}
+
+  \section*{19.}
+  上机题。
+  \begin{enumerate}
+    \item 如何编程序实现霍夫曼编码?
+  \end{enumerate}
+
+\end{document}
