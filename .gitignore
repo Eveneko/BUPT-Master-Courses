@@ -1,6 +1,9 @@
 # System File
 .DS_Store
 
+# IDE
+.vscode
+
 # Latex
 *.aux
 *.bbl
