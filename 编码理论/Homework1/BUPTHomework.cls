@@ -100,3 +100,38 @@
     xleftmargin=1.5em,
     xrightmargin=1em
 }
+
+\def\@problemname{Problem}
+\def\@solutionname{Solution}
+
+\newtheorem{@problem}{\sffamily\@problemname}
+\numberwithin{equation}{@problem}
+\numberwithin{table}{@problem}
+\numberwithin{figure}{@problem}
+\newenvironment{problem}[1][]
+{
+  \def\@arg{#1}
+  \ifx\@arg\empty
+    \@problem
+  \else
+    \@problem[\normalfont\@arg\sffamily]
+  \fi
+  \pdfbookmark{\@problemname\ \arabic{@problem}}{\arabic{@problem}}
+}
+{
+  \end@problem
+}
+
+% Solution environment
+% This is a modification of the `proof' environment from the amsthm package
+\newenvironment{solution}[1][\@solutionname]
+{
+    \par
+    \normalfont \topsep6\p@\@plus6\p@\relax
+    \trivlist
+    \item[\hskip\labelsep\sffamily\bfseries#1\@addpunct{.}]\ignorespaces
+}
+{
+    \endtrivlist\@endpefalse
+    \vspace{1pt} \hrule \vspace{1pt}
+}
