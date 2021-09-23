@@ -114,11 +114,11 @@
       \item 信源 $X$ 中事件 $x_1$ 和 $x_2$ 分别的自信息（以比特为单位）；
       
       \begin{eqnarray} 
-        I(x_1) &=& \log \frac{1}{P(x_1)} = \log \frac{1}{0.6} = 0.737\ \mbox{bits} \nonumber
+        I(x_1) &=& \log \frac{1}{P(x_1)} = \log \frac{1}{0.6} = 0.737\ \mbox{bit} \nonumber
       \end{eqnarray}
       
       \begin{eqnarray} 
-        I(x_2) &=& \log \frac{1}{P(x_2)} = \log \frac{1}{0.4} = 1.322\ \mbox{bits} \nonumber
+        I(x_2) &=& \log \frac{1}{P(x_2)} = \log \frac{1}{0.4} = 1.322\ \mbox{bit} \nonumber
       \end{eqnarray}
 
       \item 接收符号 $y_i(i=1,2)$ 发生的概率；
@@ -166,25 +166,25 @@
       \begin{eqnarray} 
         I(x_1 \vert y_1) &=& -\log_2P(x_1 \vert y_1) \nonumber \\
         &=& -\log_2(0.625) \nonumber \\
-        &=& 0.67807 \mbox{(bit)} \nonumber
+        &=& 0.67807\ \mbox{(bit)} \nonumber
       \end{eqnarray}
       
       \begin{eqnarray} 
         I(x_2 \vert y_1) &=& -\log_2P(x_2 \vert y_1) \nonumber \\
         &=& -\log_2(0.375) \nonumber \\
-        &=& 1.41503 \mbox{(bit)} \nonumber
+        &=& 1.41503\ \mbox{(bit)} \nonumber
       \end{eqnarray}
 
       \begin{eqnarray} 
         I(x_1 \vert y_2) &=& -\log_2P(x_1 \vert y_2) \nonumber \\
-        &=& -\log_2(0.5) \mbox{(bit)} \nonumber \\
-        &=& 1 \nonumber
+        &=& -\log_2(0.5) \nonumber \\
+        &=& 1\ \mbox{(bit)} \nonumber
       \end{eqnarray}
 
       \begin{eqnarray} 
         I(x_2 \vert y_2) &=& -\log_2P(x_2 \vert y_2) \nonumber \\
-        &=& -\log_2(0.5) \mbox{(bit)} \nonumber \\
-        &=& 1 \nonumber
+        &=& -\log_2(0.5) \nonumber \\
+        &=& 1\ \mbox{(bit)} \nonumber
       \end{eqnarray}
 
       \item 信源 $X$ 和信源 $Y$ 的信息熵；
@@ -207,14 +207,14 @@
         H(X \vert Y) &=& \sum_{i=1}^2\sum_{j=1}^2P(x_iy_j)\log_2 \frac{1}{P(x_i\vert y_j)} \nonumber \\
         &=& -\sum_{i=1}^2\sum_{j=1}^2P(x_i,y_j)\log_2 P(x_i\vert y_j) \nonumber \\
         &=& -0.8 \times 0.625 \times \log_2(0.625) - 0.8 \times 0.375 \times \log_2(0.375) - 0.2 \times 0.5 \times \log_2(0.5) - 0.2 \times 0.5 \times \log_2(0.5) \nonumber \\
-        &=& 0.96355 \mbox{(bit)} \nonumber 
+        &=& 0.96355\ \mbox{(bit)} \nonumber 
       \end{eqnarray}
 
       \begin{eqnarray}
         H(Y \vert X) &=& \sum_{i=1}^2\sum_{j=1}^2P(y_ix_j)\log_2 \frac{1}{P(y_i\vert x_j)} \nonumber \\
         &=& -\sum_{i=1}^2\sum_{j=1}^2P(y_i,x_j)\log_2 P(y_i\vert x_j) \nonumber \\
         &=& - 0.6 \times \frac{5}{6} \times \log_2(\frac{5}{6}) - 0.6 \times \frac{1}{6} \times \log_2(\frac{1}{6}) - 0.4 \times \frac{3}{4} \times \log_2(\frac{3}{4}) - 0.4 \times \frac{1}{4} \times \log_2(\frac{1}{4}) \nonumber \\
-        &=& 0.71452 \mbox{(bit)} \nonumber 
+        &=& 0.71452\ \mbox{(bit)} \nonumber 
       \end{eqnarray}
       
     \end{enumerate}
