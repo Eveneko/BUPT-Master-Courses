@@ -1,0 +1,65 @@
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8
+% !Mode:: "TeX:UTF-8"
+
+\documentclass[onecolumn,oneside]{BUPTHomework}
+
+\usepackage{blindtext}
+
+\author{胡玉斌}
+\sid{202111054}
+\title{Thesis\ proposal}
+\coursecode{3131100727}
+\coursename{软件安全}
+
+\begin{document}
+  \maketitle
+  
+  \section{Idea}
+
+  \textbf{Blockchain} is a public list of records which are linked together.
+  Thanks to the underlying cryptography mechanism, the records in the blockchain can resist against modification.
+
+  \textbf{Smart contracts}, once deployed on the blockchain network, become an unchangeable commitment between the involving parties.
+  Because of that, they have the potential to revolutionize many industries such as financial institutes and supply chains.
+  However, like traditional programs, smart contracts are subject to code-based vulnerabilities, which may cause huge financial loss and hinder its applications.
+  
+  \textbf{WebAssembly} (abbreviated Wasm) is a binary instruction format for a stack-based virtual machine.
+  Wasm is designed as a portable compilation target for programming languages, enabling deployment on the web for client and server applications.
+  The WebAssembly virtual machines can be embedded into Web browsers or blockchain platforms.
+  The EOSIO blockchain has supported Wasm. Furthermore, in Ethereum 2.0, Wasm VM is the replacement of Ethereum VM (EVM).
+
+  We need a tool which is inspired by program fixing techniques for traditional programs such as C or Java, and are designed specifically for smart contracts in WebAssembly.
+
+  \section{Research Questions}
+
+  \begin{enumerate}
+    \item How to detect the Vulnerability?
+    \item How to solve the problem of path explosion in symbolic execution?
+    \item Effectiveness in Patch Generation
+    \item Runtime Performance
+  \end{enumerate}
+
+  \section{Roadmap}
+
+  \begin{table}[!htbp]
+    \begin{tabular}{|l|l|l|}
+    \hline
+    Date                        & Progress      &                                                                                                                            \\ \hline
+    2021-10-1 $\sim $ 2021-10-15  & Investigation & \begin{tabular}[c]{@{}l@{}}Investigate the feasibility of related issues \\ and the current academic progress\end{tabular} \\ \hline
+    2021-10-16 $\sim$ 2021-11-15 & Implemention  & Structure and implement the proposed ideas                                                                                 \\ \hline
+    2021-11-15 $\sim$ END        & optimization  & \begin{tabular}[c]{@{}l@{}}Optimize the tools implemented \\ and the algorithm strategies\end{tabular}                     \\ \hline
+    \end{tabular}
+  \end{table}
+
+    
+  \section{Reference}
+
+  [1] Nguyen T D ,  Pham L H ,  Sun J . sGUARD: Towards Fixing Vulnerable Smart Contracts Automatically[J].  2021.
+
+  [2] Rodler M ,  Li W ,  Karame G O , et al. EVMPatch: Timely and Automated Patching of Ethereum Smart Contracts[J].  2020.
+
+
+  
+
+\end{document}
