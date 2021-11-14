@@ -180,7 +180,8 @@
         {\def\@pagerank{\@BeginPage--\pageref{LastPage}}}
 
 \ifthenelse{\equal{\@DOI}{\@empty}}
-    {\def\@oddheadtext{中国科学\,:\,信息科学}}
+    % {\def\@oddheadtext{中国科学\,:\,信息科学}}
+    {\def\@oddheadtext{图论及其应用}}
     {\ifthenelse{\equal{\@onlinetag}{\@empty}}
         {\def\@oddheadtext{中国科学\,:\,信息科学\hspace{3mm}第~\@Vol~卷\hspace{3mm}第~\@No~期}}
         {\def\@oddheadtext{中国科学\,:\,信息科学}}
