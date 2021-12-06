@@ -1,0 +1,301 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%2345678901234567890123456789012345678901234567890123456789012345678901234567890
+%        1         2         3         4         5         6         7         8
+
+%\documentclass[letterpaper, 10 pt, conference]{ieeeconf} % Comment this line out if you need a4paper
+
+\documentclass[a4paper, 10pt, conference, twocolumn]{ieeeconf}       % Use this line for a4 paper
+
+\IEEEoverridecommandlockouts                              % This command is only needed if 
+                                                          % you want to use the \thanks command
+
+\overrideIEEEmargins                                      % Needed to meet printer requirements.
+
+%In case you encounter the following error:
+%Error 1010 The PDF file may be corrupt (unable to open PDF file) OR
+%Error 1000 An error occurred while parsing a contents stream. Unable to analyze the PDF file.
+%This is a known problem with pdfLaTeX conversion filter. The file cannot be opened with acrobat reader
+%Please use one of the alternatives below to circumvent this error by uncommenting one or the other
+%\pdfobjcompresslevel=0
+%\pdfminorversion=4
+
+% See the \addtolength command later in the file to balance the column lengths
+% on the last page of the document
+
+% The following packages can be found on http:\\www.ctan.org
+%\usepackage{graphics} % for pdf, bitmapped graphics files
+%\usepackage{epsfig} % for postscript graphics files
+%\usepackage{mathptmx} % assumes new font selection scheme installed
+%\usepackage{times} % assumes new font selection scheme installed
+%\usepackage{amsmath} % assumes amsmath package installed
+%\usepackage{amssymb}  % assumes amsmath package installed
+\usepackage{cite}
+\usepackage[UTF8]{ctex} 
+
+\title{\LARGE \bf
+Automatically Fixing Vulnerabilities in WebAssembly
+}
+
+
+\author{Yubin Hu$^{1}$ % <-this % stops a space
+% \thanks{*This work was not supported by any organization}% <-this % stops a space
+% \thanks{$^{1}$Albert Author is with Faculty of Electrical Engineering, Mathematics and Computer Science,
+%         University of Twente, 7500 AE Enschede, The Netherlands
+%         {\tt\small albert.author@papercept.net}}%
+% \thanks{$^{2}$Bernard D. Researcheris with the Department of Electrical Engineering, Wright State University,
+%         Dayton, OH 45435, USA
+%         {\tt\small b.d.researcher@ieee.org}}%
+}
+
+
+\begin{document}
+
+
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+
+This reading report mainly records papers on how to detect vulnerabilities in smart contracts which based on Webassembly and how to fix them automatically and generate patches automatically to accumulate methods and experience for subsequent experiments.
+
+\end{abstract}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+\subsection{Blockchain}
+
+Blockchain is a public list of records which are linked together.
+
+\subsection{Smart Contracts}
+
+Smart Contracts, once deployed on the blockchain network, become an unchangeable commitment between the involving parties. 
+Because of that, they have the potential to revolutionize many industries such as financial institutes and supply chains.
+However, like traditional programs, smart contracts are subject to code-based vulnerabilities, which may cause huge financial loss and hinder its applications.
+
+\subsection{WebAssembly}
+
+WebAssembly (abbreviated Wasm) is a binary instruction format for a stack-based virtual machine.
+
+\begin{itemize}
+    \item Wasm is designed as a portable compilation target for programming languages, enabling deployment on the web for client and server applications.
+    \item The WebAssembly virtual machines can be embedded into Web browsers or blockchain platforms.
+    \item Furthermore, in Ethereum 2.0, Wasm VM is the replacement of Ethereum VM (EVM).
+\end{itemize}
+
+However, smart contracts are subject to code-based vulnerabilities, which casts a shadow on its applications.
+As smart contracts are unpatchable (due to the immutability of blockchain), it is essential that smart contracts are guaranteed to be free of vulnerabilities.
+Unfortunately, smart contract languages such as Solidity are Turing-complete, which implies that verifying them statically is infeasible.
+
+The following papers will explain how to detect vulnerabilities in smart contracts  which based on Webassembly from various perspectives, and how to automatically fix them and automatically generate patches.
+It will present multiple papers detailing the more innovative approaches to each process, and will conclude with a summary of the ideas we have absorbed from these papers.
+
+\section{Finding Ethereum Smart Contracts Security Issues by Comparing History Versions}\cite{Chen2020FindingES}
+
+\subsection{Abstract}
+
+Ethernet's smart contracts are complete programs that run on the blockchain.
+They cannot be modified even if an error is detected.
+The $Selfdestruct$ function is the only way to destroy a contract on the blockchain system and transfer all items on the contract balance.
+Therefore, many developers use this function to destroy contracts and redeploy a new one when an error is detected.
+In this paper, we propose an in-depth learning approach to find security issues in Ethernet smart contracts by finding updated versions of the destroyed contracts.
+After finding the updated version, we use Open Card Sorting to find the security issue.
+
+\subsection{Research Questions}
+
+\begin{enumerate}
+    \item How to find old and new versions of the same smart contract
+    \item How to check the version difference between old and new versions of the same smart contract by
+\end{enumerate}
+
+\subsection{Detailed Approach}
+
+\begin{enumerate}
+    \item Collecting data from the following two stages. Our data contains three parts, verified contracts, self-destruct contracts, and contract transactions.
+    \item Finding upgrade version of a destructed contract.
+    \item Finding the security issues by comparing the difference between a self-destruct contract and its upgrade version.
+\end{enumerate}
+
+
+\section{SGUARD: Towards Fixing Vulnerable Smart Contracts Automatically}\cite{2021sGUARD}
+
+\subsection{Abstract}
+
+In this work, we propose an approach and a tool called SGUARD, which will automatically repair potentially vulnerable smart contracts.
+SGUARD is inspired by program fixing techniques for traditional programs such as C or Java, and yet are designed specifically for smart contracts.
+First, SGUARD is designed to guarantee the correctness of the fixes.
+Furthermore, fixes for smart contracts may suffer from not only time overhead but also gas overhead and SGUARD is designed to minimize the run-time overhead in terms of time and gas introduced by the fixes.
+
+\subsection{Research Questions}
+
+In this work, a method was developed to automatically convert smart contracts so that they are proven to be free of the 4 common vulnerabilities.
+The key idea is to apply runtime verification in an efficient and transparent way.
+
+\subsection{Definition}
+
+\begin{itemize}
+    \item Control dependency
+    \item Data dependency
+    \item Intra-function reentrancy vulnerability
+    \item Cross-function reentrancy vulnerability
+    \item Dangerous tx.origin vulnerability
+    \item Arithmetic vulnerability
+\end{itemize}
+
+\subsection{Detailed Approach}
+
+\subsubsection{Enumerating Symbolic Traces}
+
+Our definition of vulnerability is based on symbolic traces.
+We simply apply the symbolic semantic rule iteratively until it terminates.
+However, in the presence of a loop, the process will not terminate as the condition of leaving the loop is usually symbolic.
+This is a well-known problem with symbolic execution, and the remedy is usually to enlighten the number of iterations bound.
+However, this approach does not work in our environment because we have to identify all data/control dependencies to identify all potential vulnerabilities.
+In the following, we establish bounds on the loop that are sufficient to identify the vulnerabilities we focus on.
+
+\subsubsection{Dependency Analysis}
+
+Given the set of symbolic traces, we then identify the dependencies between all symbolic signs among all opcodes, which are designed to check whether the trace suffers from any vulnerability.
+
+\subsubsection{Fixing the Smart Contract}
+
+After identifying the dependencies, we check each symbol for any previously defined vulnerabilities and then fix the smart contract accordingly.
+
+
+\section{ContractFix: A Framework for Automatically Fixing Vulnerabilities in Smart Contracts}
+
+\subsection{Abstract}
+
+In this paper, we present a composite document of a new framework for automatically generating security patches for vulnerable smart contracts.
+ContractFix is intended to be a generic framework that can incorporate different types of vulnerabilities into different remediation models and be used as a security "fixer" tool to automatically apply patches and validate patched contracts before they are deployed.
+To address the unique challenges of remediating smart contract vulnerabilities, given the input smart contracts, contract files are first validated using a collaborative approach that combines multiple static validation tools to identify automatically patched vulnerabilities using a majority voting mechanism to improve detection accuracy.
+Contractfix then generates patches using template-based fix patterns and leverages static program analysis (program dependency calculations and pointer analysis) to accurately infer and populate the values of the fix patterns.
+Finally, ContractFix performs two-step validation, statically verifying the elimination of vulnerabilities in the patch contract and dynamically testing the patch contract to ensure that the patch does not introduce additional faults.
+
+\subsection{Research Questions}
+
+\begin{enumerate}
+    \item Synergy of Static Verification Tools
+    \item Effectiveness in Patch Generation
+    \item Runtime Performance
+\end{enumerate}
+
+\subsection{Detailed Approach}
+
+\subsubsection{Vulnerability Detection}
+
+In this phase, Contractfix first uses static validation to detect vulnerability candidates. 
+ContractFix applies static validation to check security properties for identifying four types of vulnerabilities: Reentrancy, MissingInputValidation, LockedEther, and UnhandledException.
+
+To identify these types of vulnerabilities that can be used for automated remediation, Contractfix post-processes reported vulnerabilities based on syntactic analysis from AST and in-program control and data flow analysis.
+For example, for reported re-entry vulnerabilities, detecting whether the external function call used to control the execution of a state variable update will require control and data flow analysis.
+
+\subsubsection{Patch Generation}
+
+Contractfix performs static program analysis to extract contextual information about detected vulnerabilities, and this method is used by the remediation mode to generate the corresponding source code patches.
+Our program analysis supports three levels of granularity in the remediation model: statement level, method level, and contract level.
+
+\subsubsection{Validation and Testing}
+
+In this phase, ContractFix conducts a two-step validation to ensure that the detected vulnerabilities are eliminated while the expected behaviors are preserved in the patched contract.
+
+\textbf{Static Verification}: Once a patched contract candidate is generated, ContractFix applies static verification again on the patched contract and checks whether the vulnerabilities reported in Phase I are eliminated. If the static verification tool no longer reports the same vulnerabilities, the patched contract is considered to pass the static verification.
+
+\textbf{Semantics Validation}: Semantics validation is conducted using a smart contract testing platform named Truffle.
+
+\section{Conclusions}
+
+Through these papers, we understand how to DETECT vulnerabilities from blockchains such as Ether, EOS;
+Clarify the types of vulnerabilities on blockchains and how to fix them;
+And how to automatically fix vulnerabilities at the source level or binary level;
+And how to improve the accuracy and efficiency of automatic fixes.
+
+\subsection{Vulnerability}
+
+\subsubsection{Reentrancy}
+
+In July 2016, a fault in TheDAO contract allowed an attacker to steal \$50M.
+The atomicity and sequentiality of transactions may make developers believe that it is impossible to re-enter a non-recursive function before its termination. However, this belief is not always true for smart contracts
+
+First, the $attack()$ function in the attacker contract is called, which deposits some ethers in the victim contract and then invokes the victim’s vulnerable $refund()$ function.
+Then, the $refund()$ function sends the deposited ethers to the attacker contract, also triggering the unnamed fallback function in the attack contract.
+Next, the fallback function again calls the $refund()$ function in the victim contract.
+Since the victim contract updates the userBalances variable after the ether transfer call, userBalances remains unchanged when the attacker re-enters the $refund()$ function, and thus the balance check can still be passed.
+As a consequence, the attacker is able to repeatedly siphon off ethers from the victim contract and exhaust its balance
+
+\subsubsection{Missing Input Validation}
+The arguments of a function should be validated before their uses. 
+If developers forget to assign correct values to the arguments, EVM will execute the function using the default values based on the argument types.
+This mechanism makes smart contracts vulnerable to the attacks on function arguments.
+
+\subsubsection{Locked Ether}
+In 2017, a vulnerable contract led to the frozen of million dollars. 
+The reason is that this contract relies on another library contract to withdraw its funds (using delegatecall).
+Unfortunately, a user accidentally removed the library contract from the blockchain (using the kill instruction), and thus the funds in the wallet contract could not be extracted anymore.
+
+\subsubsection{Unhandled Exception}
+In Solidity, there are multiple situations where an exception may be raised. Unhandled exceptions can affect the security of smart contracts. 
+In February 2016, a vulnerable contract forced the owner to ask the users not to send ether to the owner because of an unhandled exception in the call instruction.
+
+\subsection{Vulnerability Detection}
+
+\begin{itemize}
+    \item Comparison with historical versions
+    \item Find control flow, data flow characteristics
+    \item Fuzzing\cite{Huang2020EOSFuzzerFE}
+    \item Using multiple existing tools, and seting thresholds to determine if it is a vulnerability
+\end{itemize}
+
+\subsection{Fixing vulnerabilities}
+
+\begin{itemize}
+    \item generates patches using template-based fix patterns and leverages static program analysis
+    \item Binary rewriting.\cite{2020EVMPatch} Binary rewriting has also been applied to retrofit security hardening techniques such as control-flow integrity, to compiled binaries, but also to dynamically apply security patches to running programs. For binary rewriting on traditional architectures two flavors of approaches have been developed: static and dynamic rewriting.
+\end{itemize}
+
+\subsection{Evaluation}
+
+\begin{itemize}
+    \item False Positives
+    \item Runtime Performance
+    \item Extra Gas
+\end{itemize}
+
+Based on the above, we can use a more appropriate approach at each stage to conduct our own experiments to detect vulnerabilities in smart contracts on EOS, as well as to fix specific vulnerabilities.
+
+\addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
+                                  % on the last page of the document manually. It shortens
+                                  % the textheight of the last page by a suitable amount.
+                                  % This command does not take effect until the next page
+                                  % so it should come on the page before the last. Make
+                                  % sure that you do not shorten the textheight too much.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section*{APPENDIX}
+
+% Appendixes should appear before the acknowledgment.
+
+% \section*{ACKNOWLEDGMENT}
+
+% The preferred spelling of the word acknowledgment in America is without an e after the g. Avoid the stilted expression, One of us (R. B. G.) thanks . . .  Instead, try R. B. G. thanks. Put sponsor acknowledgments in the unnumbered footnote on the first page.\cite{236260}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% \begin{thebibliography}{99}
+% \end{thebibliography}
+
+
+\bibliographystyle{ieeetr}
+\bibliography{BibTeX.bib}
+
+
+\end{document}
